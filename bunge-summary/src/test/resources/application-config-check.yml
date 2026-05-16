@@ -1,0 +1,13 @@
+# Isolated profile for ApplicationConfigTest (no api/security beans)
+spring:
+  config:
+    activate:
+      on-profile: config-check
+  datasource:
+    url: jdbc:postgresql://localhost:5433/bunge_summary
+    username: bunge
+    password: bunge
+    driver-class-name: org.postgresql.Driver
+
+jwt:
+  secret: dev-only-change-me-minimum-32-characters-long

@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bunge-summary
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+          cache: maven
+
+      - name: Install local Spring config from examples
+        run: |
+          cp src/main/resources/application.yml.example src/main/resources/application.yml
+          cp src/main/resources/application-prod.yml.example src/main/resources/application-prod.yml
+
+      - name: Build and test
+        run: mvn -B verify
+        env:
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5433/bunge_summary
+          DB_USERNAME: bunge
+          DB_PASSWORD: bunge
+          JWT_SECRET: ci-jwt-secret-minimum-32-characters-long-for-hs256

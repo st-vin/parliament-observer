@@ -1,0 +1,30 @@
+# Production profile (Render.com / managed Postgres)
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  batch:
+    job:
+      enabled: false
+
+logging:
+  level:
+    root: WARN
+    ke.co.bungesummary: INFO
+    org.springframework.web: WARN
+
+server:
+  error:
+    include-message: never
+    include-stacktrace: never
+
+hansard:
+  pdf-storage-path: ${PDF_STORAGE_PATH:/data/hansard}
