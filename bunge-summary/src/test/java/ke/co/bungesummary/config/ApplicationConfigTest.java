@@ -34,7 +34,7 @@ class ApplicationConfigTest {
     @Test
     void devProfileExposesGeminiResendAndJwtKeys() {
         assertThat(environment.getProperty("gemini.api-key")).isNotNull();
-        assertThat(environment.getProperty("gemini.model")).isEqualTo("gemini-1.5-flash");
+        assertThat(environment.getProperty("gemini.model")).isEqualTo("gemini-3-flash-preview");
         assertThat(environment.getProperty("gemini.embedding-model"))
                 .isEqualTo("text-embedding-004");
         assertThat(environment.getProperty("jwt.secret")).isNotBlank();

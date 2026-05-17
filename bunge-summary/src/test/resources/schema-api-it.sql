@@ -82,3 +82,62 @@ CREATE TABLE IF NOT EXISTS user_topic_subscriptions (
     subscribed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (user_id, topic_id)
 );
+
+INSERT INTO topics (id, name, slug) VALUES
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa301', 'Health', 'health'),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa302', 'Education', 'education');
+
+INSERT INTO sittings (id, date, chamber, raw_pdf_path, ingestion_status) VALUES
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa101', '2024-03-15', 'NATIONAL_ASSEMBLY', '/data/test.pdf', 'COMPLETED'),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa102', '2024-04-10', 'NATIONAL_ASSEMBLY', '/data/test2.pdf', 'COMPLETED');
+
+INSERT INTO proceedings (
+    id, sitting_id, title, proceeding_type, outcome, plain_summary, raw_text, sequence_in_sitting
+) VALUES
+    (
+        'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa201',
+        'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa101',
+        'Health Budget Allocation',
+        'MOTION',
+        'PASSED',
+        'The House debated increased health funding.',
+        'Raw Hansard text for health motion.',
+        1
+    ),
+    (
+        'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa202',
+        'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa102',
+        'Education Reform Bill',
+        'BILL',
+        'REFERRED',
+        'MPs discussed curriculum reforms.',
+        'Raw Hansard text for education bill.',
+        1
+    );
+
+INSERT INTO proceeding_topics (proceeding_id, topic_id, confidence_score) VALUES
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa201', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa301', 0.95),
+    ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa202', 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa302', 0.88);
+
+INSERT INTO members (
+    id, full_name, display_name, constituency, party, chamber
+) VALUES (
+    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa401',
+    'Jane Wanjiku',
+    'Hon. Jane Wanjiku',
+    'Nairobi West',
+    'Example Party',
+    'NATIONAL_ASSEMBLY'
+);
+
+INSERT INTO contributions (
+    id, proceeding_id, member_id, summary, stance, verbatim_excerpt, sequence_in_proceeding
+) VALUES (
+    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa501',
+    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa201',
+    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaa401',
+    'Supported increased health allocation.',
+    'FOR',
+    'I rise to support this motion for the health sector.',
+    1
+);

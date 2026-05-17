@@ -61,7 +61,9 @@ mvn spring-boot:run
 
 Active profiles by default: `dev` + `api` (JWT auth enabled).
 
-- API base: `http://localhost:8080`
+Server port comes from `PORT` in `.env` (default **8080**). If 8080 is in use, set e.g. `PORT=8085` and use that in URLs below.
+
+- API base: `http://localhost:8085` when `PORT=8085` in `.env` (default would be 8080)
 - Register: `POST /api/v1/auth/register`
 - Login: `POST /api/v1/auth/login`
 - Public sittings: `GET /api/v1/sittings`
