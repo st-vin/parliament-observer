@@ -15,6 +15,8 @@ public interface SittingRepository extends JpaRepository<Sitting, UUID> {
 
     Optional<Sitting> findByDate(LocalDate date);
 
+    Optional<Sitting> findTopByOrderByDateDesc();
+
     List<Sitting> findByIngestionStatusOrderByDateAsc(String ingestionStatus);
 
     @Query(

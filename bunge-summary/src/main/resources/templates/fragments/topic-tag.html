@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<a th:fragment="tag"
+   th:href="@{/browse/topic/{slug}(slug=${t.slug})}"
+   class="inline-block text-xs bg-primary-light/20 text-primary px-2 py-0.5 rounded mr-1 mb-1 hover:bg-primary-light/30"
+   th:text="${t.name}">Topic</a>
+</body>
+</html>

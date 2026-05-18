@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="calendar" id="calendar-panel">
+    <div class="flex items-center justify-between mb-4">
+        <a th:href="@{/browse/date(year=${prevYear}, month=${prevMonth}, date=${selectedDate})}"
+           class="text-primary hover:underline text-sm">← Previous</a>
+        <h2 class="font-semibold" th:text="${monthLabel}">May 2025</h2>
+        <a th:href="@{/browse/date(year=${nextYear}, month=${nextMonth}, date=${selectedDate})}"
+           class="text-primary hover:underline text-sm">Next →</a>
+    </div>
+    <div class="grid grid-cols-7 gap-1 text-center text-xs font-medium text-gray-500 mb-1">
+        <span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span><span>Su</span>
+    </div>
+    <div class="grid grid-cols-7 gap-1 text-center text-sm">
+        <a th:each="cell : ${calendarCells}"
+           th:href="@{/browse/date(year=${year}, month=${month}, date=${cell.date})}"
+           th:text="${cell.dayOfMonth}"
+           th:class="${cell.inCurrentMonth ? '' : 'calendar-day-disabled opacity-40'} + ' ' + (${cell.hasSitting} ? 'calendar-day-sitting rounded ' : 'rounded ') + (${cell.selected} ? 'calendar-day-selected ' : '') + (${!cell.inCurrentMonth} ? 'pointer-events-none' : 'hover:bg-gray-100 block py-2')"
+           class="py-2 rounded block">1</a>
+    </div>
+    <p class="text-xs text-gray-500 mt-3"><span class="inline-block w-3 h-3 calendar-day-sitting rounded mr-1"></span> Parliament sat</p>
+</div>
+</body>
+</html>

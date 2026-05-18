@@ -1,0 +1,86 @@
+:root {
+  --primary: #1b4332;
+  --primary-light: #2d6a4f;
+  --accent: #d62828;
+  --success: #2d6a4f;
+  --warning: #e9c46a;
+  --neutral: #6b7280;
+  --bg: #f9fafb;
+  --surface: #ffffff;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-light);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+
+.badge-passed {
+  background-color: var(--success);
+  color: #fff;
+}
+
+.badge-rejected {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+.badge-deferred,
+.badge-referred {
+  background-color: var(--warning);
+  color: #111827;
+}
+
+.badge-debated,
+.badge-default {
+  background-color: var(--neutral);
+  color: #fff;
+}
+
+.stance-for {
+  color: var(--success);
+}
+
+.stance-against {
+  color: var(--accent);
+}
+
+.stance-uncertain,
+.stance-neutral {
+  color: var(--neutral);
+}
+
+.calendar-day-sitting {
+  background-color: var(--primary-light);
+  color: #fff;
+}
+
+.calendar-day-disabled {
+  color: #d1d5db;
+}
+
+.calendar-day-selected {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.ai-label {
+  background: #f3f4f6;
+  border-left: 3px solid var(--primary);
+}

@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<span th:fragment="badge"
+      th:class="'inline-block text-xs font-semibold px-2 py-0.5 rounded ' + ${T(ke.co.bungesummary.web.WebViewHelper).outcomeBadgeClass(outcome)}"
+      th:text="${T(ke.co.bungesummary.web.WebViewHelper).outcomeLabel(outcome)}">OUTCOME</span>
+</body>
+</html>

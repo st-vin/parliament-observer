@@ -1,7 +1,7 @@
 package ke.co.bungesummary.config;
 
-import ke.co.bungesummary.security.JwtAuthenticationFilter;
 import jakarta.servlet.http.HttpServletResponse;
+import ke.co.bungesummary.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -49,17 +49,33 @@ public class SecurityConfig {
                                         .permitAll()
                                         .requestMatchers(HttpMethod.GET, "/api/v1/search/**")
                                         .permitAll()
-                                        .requestMatchers("/", "/error", "/actuator/health")
+                                        .requestMatchers(
+                                                "/",
+                                                "/browse/**",
+                                                "/proceedings/**",
+                                                "/login",
+                                                "/register",
+                                                "/logout",
+                                                "/css/**",
+                                                "/error",
+                                                "/actuator/health")
                                         .permitAll()
+                                        .requestMatchers("/profile", "/profile/**")
+                                        .authenticated()
                                         .anyRequest()
                                         .authenticated())
                 .exceptionHandling(
                         exceptions ->
                                 exceptions.authenticationEntryPoint(
-                                        (request, response, authException) ->
+                                        (request, response, authException) -> {
+                                            if (request.getRequestURI().startsWith("/api/")) {
                                                 response.sendError(
                                                         HttpServletResponse.SC_UNAUTHORIZED,
-                                                        "Unauthorized")))
+                                                        "Unauthorized");
+                                            } else {
+                                                response.sendRedirect("/login");
+                                            }
+                                        }))
                 .addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

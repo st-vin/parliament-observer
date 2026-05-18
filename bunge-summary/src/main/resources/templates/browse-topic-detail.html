@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(${title}, ~{::section})}">
+<th:block th:fragment="section">
+    <nav class="text-sm text-gray-500 mb-4">
+        <a th:href="@{/browse/topic}" class="hover:text-primary">Topics</a>
+        <span> / </span>
+        <span th:text="${topic.name}">Topic</span>
+    </nav>
+
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <div>
+            <h1 class="text-2xl font-bold" th:text="${topic.name}">Topic</h1>
+            <p class="text-sm text-gray-500"
+               th:text="${topic.proceedingCount} + ' proceedings'">0 proceedings</p>
+        </div>
+        <th:block th:if="${isAuthenticated}">
+            <form th:if="${!isTracked}"
+                  th:action="@{/profile/topics/{slug}/track(slug=${topic.slug})}" method="post">
+                <input type="hidden" name="returnTo" th:value="@{/browse/topic/{slug}(slug=${topic.slug})}"/>
+                <button type="submit" class="btn-primary px-4 py-2 rounded text-sm">Track this topic</button>
+            </form>
+            <form th:if="${isTracked}"
+                  th:action="@{/profile/topics/{slug}/untrack(slug=${topic.slug})}" method="post">
+                <input type="hidden" name="returnTo" th:value="@{/browse/topic/{slug}(slug=${topic.slug})}"/>
+                <button type="submit" class="border border-primary text-primary px-4 py-2 rounded text-sm">
+                    Stop tracking
+                </button>
+            </form>
+        </th:block>
+        <p th:unless="${isAuthenticated}" class="text-sm text-gray-500">
+            <a th:href="@{/login}" class="text-primary hover:underline">Log in</a> to track this topic.
+        </p>
+    </div>
+
+    <p th:if="${proceedings == null or proceedings.isEmpty()}" class="text-gray-500">No proceedings for this topic yet.</p>
+    <th:block th:each="proceeding : ${proceedings}">
+        <article th:replace="~{fragments/proceeding-card :: card}"></article>
+    </th:block>
+</th:block>
+</html>

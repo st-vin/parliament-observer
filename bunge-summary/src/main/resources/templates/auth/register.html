@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(${title}, ~{::section})}">
+<th:block th:fragment="section">
+    <div class="max-w-md mx-auto card p-6">
+        <h1 class="text-2xl font-bold mb-4">Create account</h1>
+        <p th:if="${error}" class="text-accent text-sm mb-3" th:text="${error}">Error</p>
+        <form th:action="@{/register}" th:object="${authRequest}" method="post" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-1" for="email">Email</label>
+                <input id="email" type="email" th:field="*{email}" required
+                       class="w-full border rounded px-3 py-2 text-sm"/>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1" for="password">Password</label>
+                <input id="password" type="password" th:field="*{password}" required minlength="8"
+                       class="w-full border rounded px-3 py-2 text-sm"/>
+            </div>
+            <button type="submit" class="btn-primary w-full py-2 rounded font-medium">Sign up</button>
+        </form>
+        <p class="text-sm text-gray-600 mt-4 text-center">
+            Already have an account? <a th:href="@{/login}" class="text-primary hover:underline">Log in</a>
+        </p>
+    </div>
+</th:block>
+</html>

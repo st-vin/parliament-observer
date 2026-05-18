@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content)">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${title} + ' · Bunge Summary'">Bunge Summary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { DEFAULT: '#1B4332', light: '#2D6A4F' },
+                        accent: '#D62828'
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="stylesheet" th:href="@{/css/app.css}"/>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+<th:block th:replace="~{fragments/nav :: nav}"/>
+<main class="flex-1 container mx-auto px-4 py-6 max-w-5xl">
+    <th:block th:replace="${content}"/>
+</main>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+</body>
+</html>

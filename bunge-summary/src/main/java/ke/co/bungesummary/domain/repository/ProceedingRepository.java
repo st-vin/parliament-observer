@@ -49,4 +49,15 @@ public interface ProceedingRepository extends JpaRepository<Proceeding, UUID> {
             ORDER BY s.date DESC, p.sequenceInSitting ASC
             """)
     Page<Proceeding> findByTopicSlug(@Param("topicSlug") String topicSlug, Pageable pageable);
+
+    @Query(
+            """
+            SELECT DISTINCT p FROM Proceeding p
+            JOIN FETCH p.sitting s
+            LEFT JOIN FETCH p.proceedingTopics pt
+            LEFT JOIN FETCH pt.topic t
+            WHERE t.slug IN :slugs
+            ORDER BY s.date DESC, p.sequenceInSitting ASC
+            """)
+    List<Proceeding> findByTopicSlugIn(@Param("slugs") List<String> slugs, Pageable pageable);
 }

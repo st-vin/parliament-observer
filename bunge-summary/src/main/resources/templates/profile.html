@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(${title}, ~{::section})}">
+<th:block th:fragment="section">
+    <h1 class="text-2xl font-bold mb-2">My profile</h1>
+    <p class="text-sm text-gray-600 mb-6" th:text="${user.email}">email</p>
+    <p th:if="${message}" class="text-primary text-sm mb-4" th:text="${message}">Message</p>
+
+    <section class="card p-4 mb-6">
+        <h2 class="font-semibold mb-2">Notification preference</h2>
+        <p class="text-sm text-gray-600"
+           th:text="${user.notificationFrequency} + ' (email digests coming in a future release)'">
+            DAILY
+        </p>
+    </section>
+
+    <section class="card p-4 mb-6">
+        <h2 class="font-semibold mb-3">Tracked topics</h2>
+        <p th:if="${subscriptions.isEmpty()}" class="text-sm text-gray-500">
+            You are not tracking any topics yet. Browse
+            <a th:href="@{/browse/topic}" class="text-primary hover:underline">topics</a> to subscribe.
+        </p>
+        <ul th:unless="${subscriptions.isEmpty()}" class="space-y-2">
+            <li th:each="s : ${subscriptions}" class="flex justify-between items-center text-sm border-b py-2">
+                <a th:href="@{/browse/topic/{slug}(slug=${s.slug})}" th:text="${s.name}" class="text-primary hover:underline">Topic</a>
+                <form th:action="@{/profile/topics/{slug}/untrack(slug=${s.slug})}" method="post">
+                    <input type="hidden" name="returnTo" value="/profile"/>
+                    <button type="submit" class="text-accent text-xs hover:underline">Remove</button>
+                </form>
+            </li>
+        </ul>
+    </section>
+
+    <section class="card p-4 mb-6" th:if="${!untrackedTopics.isEmpty()}">
+        <h2 class="font-semibold mb-3">Add more topics</h2>
+        <ul class="space-y-2">
+            <li th:each="t : ${untrackedTopics}" class="flex justify-between items-center text-sm border-b py-2">
+                <span th:text="${t.name}">Topic</span>
+                <form th:action="@{/profile/topics/{slug}/track(slug=${t.slug})}" method="post">
+                    <input type="hidden" name="returnTo" value="/profile"/>
+                    <button type="submit" class="text-primary text-xs hover:underline">+ Track</button>
+                </form>
+            </li>
+        </ul>
+    </section>
+
+    <section th:if="${trackedFeed != null and !trackedFeed.isEmpty()}">
+        <h2 class="font-semibold mb-3">Your feed</h2>
+        <th:block th:each="proceeding : ${trackedFeed}">
+            <article th:replace="~{fragments/proceeding-card :: card}"></article>
+        </th:block>
+    </section>
+</th:block>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(${title}, ~{::section})}">
+<th:block th:fragment="section">
+    <h1 class="text-2xl font-bold mb-2">Browse by Topic</h1>
+    <p class="text-gray-600 text-sm mb-6">Find proceedings by issues that matter to you.</p>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <a th:each="t : ${topics}"
+           th:href="@{/browse/topic/{slug}(slug=${t.slug})}"
+           class="card p-4 hover:shadow-md block text-center">
+            <p class="font-semibold text-primary" th:text="${t.name}">Topic</p>
+            <p class="text-xs text-gray-500 mt-1"
+               th:text="${t.proceedingCount} + ' proceedings'">0 proceedings</p>
+        </a>
+    </div>
+</th:block>
+</html>

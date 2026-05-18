@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="nav" class="bg-primary text-white shadow">
+    <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3 max-w-5xl">
+        <a th:href="@{/}" class="font-bold text-lg tracking-wide">Bunge Summary</a>
+        <div class="flex flex-wrap items-center gap-4 text-sm">
+            <div class="relative group">
+                <span class="cursor-pointer">Browse ▾</span>
+                <div class="hidden group-hover:block absolute top-full left-0 mt-1 bg-white text-gray-800 shadow-lg rounded py-1 min-w-[10rem] z-10">
+                    <a th:href="@{/browse/date}" class="block px-4 py-2 hover:bg-gray-100">By Date</a>
+                    <a th:href="@{/browse/topic}" class="block px-4 py-2 hover:bg-gray-100">By Topic</a>
+                </div>
+            </div>
+            <th:block th:if="${isAuthenticated}">
+                <a th:href="@{/profile}" class="hover:underline">Profile</a>
+                <form th:action="@{/logout}" method="post" class="inline">
+                    <button type="submit" class="hover:underline">Logout</button>
+                </form>
+            </th:block>
+            <th:block th:unless="${isAuthenticated}">
+                <a th:href="@{/login}" class="hover:underline">Login</a>
+                <a th:href="@{/register}" class="bg-white text-primary px-3 py-1 rounded font-medium hover:bg-gray-100">Sign Up</a>
+            </th:block>
+        </div>
+    </div>
+</nav>
+</body>
+</html>
